@@ -1,7 +1,7 @@
 [submodule "SCREEN-CONTROLLER"]
 	path = SCREEN-CONTROLLER
 	url = https://github.com/felipegaspari/DCO3-MONOSYNTH-SCREEN-CONTROLLER.git
-	branch = improvements
+	branch = improvements-color-screen
 [submodule "INPUT-CONTROLLER"]
 	path = INPUT-CONTROLLER
 	url = https://github.com/felipegaspari/DCO3-MONOSYNTH-INPUT-CONTROLLER.git
