@@ -13,3 +13,4 @@
 [submodule "Mainboard"]
 	path = Mainboard
 	url = https://github.com/felipegaspari/DCO4_Mainboard_Controller.git
+	branch = improvements
