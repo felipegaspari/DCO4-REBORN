@@ -1,0 +1,12 @@
+[submodule "SCREEN-CONTROLLER"]
+	path = SCREEN-CONTROLLER
+	url = https://github.com/felipegaspari/DCO3-MONOSYNTH-SCREEN-CONTROLLER.git
+[submodule "INPUT-CONTROLLER"]
+	path = INPUT-CONTROLLER
+	url = https://github.com/felipegaspari/DCO3-MONOSYNTH-INPUT-CONTROLLER.git
+[submodule "DCO"]
+	path = DCO
+	url = https://github.com/felipegaspari/DCO3-MONOSYNTH-DCO.git
+[submodule "Mainboard"]
+	path = Mainboard
+	url = https://github.com/felipegaspari/DCO4_Mainboard_Controller.git
