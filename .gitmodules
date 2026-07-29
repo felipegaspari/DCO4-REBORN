@@ -11,6 +11,6 @@
 	url = https://github.com/felipegaspari/DCO3-MONOSYNTH-DCO.git
 	branch = improvements
 [submodule "Mainboard"]
-	path = Mainboard
+	path = _archived/Mainboard
 	url = https://github.com/felipegaspari/DCO4_Mainboard_Controller.git
 	branch = improvements
