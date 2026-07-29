@@ -1,0 +1,29 @@
+# Editor / tooling
+.vscode/
+.cursor/
+*.code-workspace
+*.backup
+*.bak
+*~
+
+# Arduino / arduino-cli compile output (temp)
+_build_tmp/
+_build_tmp_*/
+**/_build_tmp/
+**/_build_tmp_*/
+
+# Common firmware artifacts
+*.elf
+*.bin
+*.uf2
+*.hex
+*.map
+*.o
+*.d
+*.a
+
+# Arduino IDE / cli caches
+build.options.json
+includes.cache
+libraries.cache
+compile_commands.json
