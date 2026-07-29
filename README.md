@@ -48,7 +48,7 @@ flowchart LR
 
 ## Changes so far (DCO submodule)
 
-Work so far is **DCO-only**. Mainboard / Input / Screen are still DCO4-era.
+Work is on DCO branch **`autotune-improvements`** (not the older `improvements` tree). Mainboard / Input / Screen are still DCO4-era.
 
 ### Voicing & PIO
 
