@@ -16,7 +16,7 @@ A **3-oscillator monosynth** firmware project, forked from DCO4. The DCO voice b
 |-------|--------|------|
 | DCO | `DCO/` | MIDI, voice engine, envs/LFOs, hub UARTs, cal, opt-in CV outs (Pico 2) |
 | Input | `INPUT-CONTROLLER/` | Panel scan, presets → DCO |
-| Screen | `SCREEN-CONTROLLER/` | LVGL display; gap from DCO |
+| Screen | `SCREEN-CONTROLLER/` | LVGL display; gap relayed by Input |
 | ~~Mainboard~~ | [`_archived/Mainboard/`](_archived/Mainboard/) | Archived STM32 peer |
 
 Submodules: see `.gitmodules`. Overview: [`DCO/docs/SYSTEM_OVERVIEW.md`](DCO/docs/SYSTEM_OVERVIEW.md).
@@ -34,8 +34,9 @@ Submodules: see `.gitmodules`. Overview: [`DCO/docs/SYSTEM_OVERVIEW.md`](DCO/doc
 ```mermaid
 flowchart LR
   MIDI["MIDI USB+DIN"] --> DCO["DCO Pico 2 hub"]
-  Input["Input"] -->|"UART"| DCO
-  DCO -->|"gap UART"| Screen["Screen"]
+  Input["Input"] -->|"UART panel\nInput Serial1 TX GP0 to DCO Serial2 RX GP21"| DCO
+  DCO -->|"gap 154 + cal 155\nDCO Serial2 TX GP20 to Input Serial1 RX GP1"| Input
+  Input -->|"UART UI + relayed gap\nInput Serial2 TX GP4 to Screen Serial1 RX GP13"| Screen["Screen"]
   DCO --> PIO0["PIO0 SM0 OSC1"]
   DCO --> PIO1["PIO1 SM0 OSC2"]
   DCO --> PIO2["PIO2 SM0 OSC3"]
@@ -52,6 +53,6 @@ arduino-cli compile \
   .
 ```
 
-Default build enables Input + Screen hub. Legacy Mainboard: `#define ENABLE_LEGACY_MAINBOARD_LINK` in `DCO.ino`.
+The DCO has one peer link: its Serial2 (GP20 TX / GP21 RX) against the Input's Serial1 (GP0 TX / GP1 RX). The Input drives the Screen from its other UART, Serial2 TX (GP4), and relays the calibration gap there, so there are no serial topology flags to set.
 
 Living checklist: [`TODO_3OSC_MIGRATION.md`](TODO_3OSC_MIGRATION.md).

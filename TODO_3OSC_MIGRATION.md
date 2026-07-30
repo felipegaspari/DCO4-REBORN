@@ -23,7 +23,7 @@ Status key: `[x]` done · `[ ]` todo · `[~]` partial
 
 ### Archived Mainboard (`_archived/Mainboard/`)
 - [x] Logic pass for monosynth (`NUM_VOICES 1`, `NUM_FILTERS 2`, OSC3 forward-only)
-- [x] Archived after DCO hub cutover (`ENABLE_LEGACY_MAINBOARD_LINK` escape hatch)
+- [x] Archived after DCO hub cutover (legacy link code since deleted — no escape hatch)
 
 ---
 
