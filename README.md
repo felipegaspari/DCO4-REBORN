@@ -55,4 +55,11 @@ arduino-cli compile \
 
 The DCO has one peer link: its Serial2 (GP20 TX / GP21 RX) against the Input's Serial1 (GP0 TX / GP1 RX). The Input drives the Screen from its other UART, Serial2 TX (GP4), and relays the calibration gap there, so there are no serial topology flags to set.
 
+## Driving the DCO without the panel
+
+Two ways, both reaching the whole control surface with no Input board or Screen attached:
+
+- [`DCO/tools/dco_control/`](DCO/tools/dco_control/README.md) — a Linux GUI over USB serial
+- [`DCO/docs/MIDI_CC_MAP.md`](DCO/docs/MIDI_CC_MAP.md) — every control on a 7-bit MIDI CC, for a DAW or a panel app, with a generated Open Stage Control session in `DCO/tools/panels/`
+
 Living checklist: [`TODO_3OSC_MIGRATION.md`](TODO_3OSC_MIGRATION.md).
