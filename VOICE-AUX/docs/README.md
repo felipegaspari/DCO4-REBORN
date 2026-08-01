@@ -12,11 +12,14 @@ Helper MCU for **post-filter** controls. Architecture: [`../../DCO/docs/DUAL_MCU
 
 | ParamId | Name | Action |
 |--------:|------|--------|
-| 52 | `PARAM_DIST_DRIVE` | PWM → Dist Drive CV |
+| 52 | `PARAM_DIST_DRIVE` | Panel base; PWM after mod-matrix sum |
 | 53 | `PARAM_DIST_MIX` | PWM → Dist Mix CV |
 | 54 | `PARAM_FILTER_MODE` | 2 GPIO bits → AS3320 mode (DG411) |
+| 60–83 | Mod matrix slots | Apply dest **6** (Dist Drive) only — see [`MOD_MATRIX.md`](../../DCO/docs/MOD_MATRIX.md) |
 
-FX IDs 55+ reserved in `params_def.h` (stubs only).
+FX IDs 55–56 reserved in `params_def.h` (stubs only).
+
+Each `loop()` calls `mod_matrix_apply_dist()` so LFO/ADSR stubs / local Random can move Dist Drive without a new param frame.
 
 ## Provisional breadboard pins
 

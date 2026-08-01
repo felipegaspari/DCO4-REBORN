@@ -66,7 +66,7 @@ Status key: `[x]` done · `[ ]` todo · `[~]` partial
 ### PCB / analog (monosynth)
 - [ ] Finalize Pico 2 DCO pinout (RESET ×3, RANGE ×3, PW ×1, cal sense, UART, MIDI, board rails)
 - [ ] Confirm OSC1–3 analog front-ends (saw/pulse/mix) match firmware assumptions
-- [ ] Confirm **no OSC3 SQR/wave mux** is intentional (logic-only OSC3) — or add hardware later
+- [x] Per-osc wave mux: OSC1–3 × Saw/Pulse/Tri via dual 595 + DG411 ([`DCO/docs/WAVE_MUX.md`](DCO/docs/WAVE_MUX.md))
 - [ ] Wire **2 independent filters** for paraphonic plan (CV already reserved as `NUM_FILTERS 2`)
 - [ ] VCA / resonance / cutoff assignments for mono + 2-filter layout
 - [ ] Shared PW path (one PW voice) on PCB
@@ -85,7 +85,7 @@ Status key: `[x]` done · `[ ]` todo · `[~]` partial
 ### Future (out of scope for “mono ship”)
 - [ ] True 3-voice paraphonic note allocation → osc ownership
 - [ ] Independent filter envelopes per paraphonic note
-- [ ] OSC3 analog level / wave select (if PCB grows a 3rd mixer path)
+- [x] OSC3 analog level + wave select (level PWM + WAVE_MUX)
 - [ ] Rename sketch/product strings on Input/Screen away from “DCO4” if desired
 
 ---

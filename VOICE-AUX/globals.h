@@ -36,4 +36,8 @@ void update_parameters(uint16_t paramNumber, int16_t paramValue);
 void init_serial();
 void serial_panel_task();
 
+// mod_matrix.ino
+void mod_matrix_init();
+void mod_matrix_apply_dist();
+
 #endif  // VOICE_AUX_GLOBALS_H

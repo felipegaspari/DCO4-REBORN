@@ -2,6 +2,7 @@
 // RX-only on Input TX fanout — never TX upstream. See DCO/docs/DUAL_MCU.md.
 
 #include "globals.h"
+#include "mod_matrix.h"
 #include "serial_parser.h"
 #include "serial_input_protocol.h"
 #include "serial_param_protocol.h"
@@ -11,10 +12,12 @@ void setup() {
   init_serial();
   init_dist_pwm();
   init_filter_mode_gpio();
+  mod_matrix_init();
   write_dist_pwm();
   apply_filter_mode_gpio();
 }
 
 void loop() {
   serial_panel_task();
+  mod_matrix_apply_dist();
 }
