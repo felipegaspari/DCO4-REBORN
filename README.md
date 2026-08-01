@@ -14,8 +14,9 @@ A **3-oscillator monosynth** firmware project, forked from DCO4. The DCO voice b
 
 | Board | Folder | Role |
 |-------|--------|------|
-| DCO | `DCO/` | MIDI, voice engine, envs/LFOs, hub UARTs, cal, opt-in CV outs (Pico 2) |
-| Input | `INPUT-CONTROLLER/` | Panel scan, presets → DCO |
+| DCO | `DCO/` | MIDI, voice engine, envs/LFOs, hub UARTs, cal, opt-in CV outs (RP2350) |
+| Voice aux | `VOICE-AUX/` | RP2040: Dist Drive/Mix + filter mode (RX-only on Input TX); see `DCO/docs/DUAL_MCU.md` |
+| Input | `INPUT-CONTROLLER/` | Panel scan, presets → voice (DCO ± aux) |
 | Screen | `SCREEN-CONTROLLER/` | LVGL display; gap relayed by Input |
 | ~~Mainboard~~ | [`_archived/Mainboard/`](_archived/Mainboard/) | Archived STM32 peer |
 
