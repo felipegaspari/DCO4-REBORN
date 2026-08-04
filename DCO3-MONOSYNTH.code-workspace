@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../DCO/DCO4_DCO"
+		},
+		{
+			"path": "ADSR_Bezier"
 		}
 	],
 	"settings": {}
