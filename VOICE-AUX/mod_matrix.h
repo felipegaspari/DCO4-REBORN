@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-// Slim mod matrix for Dist Drive only. Same ParamIds / enums as DCO.
+// Slim mod matrix for Dist Drive / Dist Mix. Same ParamIds / enums as DCO.
 // See DCO/docs/MOD_MATRIX.md.
 
 static constexpr uint8_t MOD_SLOT_COUNT = 8;
@@ -19,7 +19,11 @@ enum ModSource : uint8_t {
   MOD_SRC_KEYTRACK = 5,
   MOD_SRC_RANDOM = 6,
   MOD_SRC_AFTERTOUCH = 7,
-  MOD_SRC_COUNT = 8
+  MOD_SRC_LFO1 = 8,
+  MOD_SRC_LFO2 = 9,
+  MOD_SRC_PITCH_BEND = 10,
+  MOD_SRC_MOD_WHEEL = 11,
+  MOD_SRC_COUNT = 12
 };
 
 enum ModDest : uint8_t {
@@ -30,7 +34,9 @@ enum ModDest : uint8_t {
   MOD_DEST_VCF1_RESO = 4,
   MOD_DEST_VCF2_RESO = 5,
   MOD_DEST_DIST_DRIVE = 6,
-  MOD_DEST_COUNT = 7
+  MOD_DEST_VCF_CUTOFF = 7,
+  MOD_DEST_DIST_MIX = 8,
+  MOD_DEST_COUNT = 9
 };
 
 struct ModSlot {
@@ -43,7 +49,7 @@ void mod_matrix_init();
 void mod_matrix_set_source(uint8_t slot, int16_t v);
 void mod_matrix_set_dest(uint8_t slot, int16_t v);
 void mod_matrix_set_depth(uint8_t slot, int16_t v);
-// Re-sum Dist Drive from slots and write PWM. Call from loop.
+// Re-sum Dist Drive / Dist Mix from slots and write PWM. Call from loop.
 void mod_matrix_apply_dist();
 
 #endif

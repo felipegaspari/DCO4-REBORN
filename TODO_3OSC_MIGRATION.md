@@ -106,6 +106,6 @@ Status key: `[x]` done · `[ ]` todo · `[~]` partial
 |----|--------|--------|
 | 33 | `PARAM_OSC3_INTERVAL` | DCO ✓ · Input ✓ · Screen ✓ |
 | 34 | `PARAM_OSC3_DETUNE_VAL` | DCO ✓ · Input ✓ · Screen ✓ |
-| 35 | `PARAM_LFO2_TO_DETUNE3` | DCO ✓ · Input ✓ · Screen ✓ |
+| 35 | `PARAM_LFO2_TO_OSC3` | DCO ✓ · Input ✓ · Screen ✓ |
 
 ADSR3→osc (`PARAM_ADSR3_TO_OSC_SELECT` = 10): **0–4** on DCO / Input / Screen (OSC1 / OSC2 / both / OSC3 / all).
