@@ -2,7 +2,7 @@
 #include "mod_matrix.h"
 
 static ModSlot g_mod_slots[MOD_SLOT_COUNT];
-static float mod_random_snh = 0.0f;
+static int16_t mod_random_snh_q15 = 0;
 static uint32_t mod_random_last_ms = 0;
 
 void mod_matrix_init() {
@@ -11,7 +11,7 @@ void mod_matrix_init() {
     g_mod_slots[i].dest = MOD_DEST_EMPTY;
     g_mod_slots[i].depth = 0;
   }
-  mod_random_snh = 0.0f;
+  mod_random_snh_q15 = 0;
   mod_random_last_ms = 0;
 }
 
@@ -40,12 +40,12 @@ void mod_matrix_set_depth(uint8_t slot, int16_t v) {
 
 // Aux has no MIDI / EnvDCO / LFO: ADSR3/4, LFO1–4, vel, keytrack, AT, pitch bend, mod wheel → 0.
 // Random free-runs ~5 Hz until performance broadcast exists.
-static float mod_matrix_read_source(uint8_t src) {
+static int32_t mod_matrix_read_source_q15(uint8_t src) {
   switch (src) {
     case MOD_SRC_RANDOM:
-      return mod_random_snh;
+      return (int32_t)mod_random_snh_q15;
     default:
-      return 0.0f;
+      return 0;
   }
 }
 
@@ -61,7 +61,8 @@ static int32_t mod_matrix_accumulate_dest(ModDest dest) {
     const ModSlot& s = g_mod_slots[i];
     if (s.source == MOD_SRC_EMPTY || s.dest != (uint8_t)dest) continue;
     if (s.depth == 0) continue;
-    accum += (int32_t)(mod_matrix_read_source(s.source) * (float)s.depth);
+    const int32_t src_q15 = mod_matrix_read_source_q15(s.source);
+    accum += (int32_t)(((int64_t)src_q15 * (int64_t)s.depth) >> 15);
   }
   return accum;
 }
@@ -70,7 +71,7 @@ void mod_matrix_apply_dist() {
   uint32_t now = millis();
   if ((now - mod_random_last_ms) >= 200) {
     mod_random_last_ms = now;
-    mod_random_snh = ((float)random(0, 2001) - 1000.0f) * 0.001f;
+    mod_random_snh_q15 = (int16_t)(((int32_t)random(0, 2001) - 1000) * 32);
   }
 
   uint16_t dist_out = mod_clamp_u16((int32_t)DIST_DRIVE + mod_matrix_accumulate_dest(MOD_DEST_DIST_DRIVE));

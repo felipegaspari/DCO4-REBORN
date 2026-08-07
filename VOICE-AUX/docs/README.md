@@ -21,22 +21,20 @@ FX IDs 55–56 reserved in `params_def.h` (stubs only).
 
 Each `loop()` calls `mod_matrix_apply_dist()` so LFO/ADSR stubs / local Random can move Dist Drive without a new param frame.
 
-## Provisional breadboard pins
+## Pinout
 
-Freeze on PCB later — **not** the DCO solo-B Dist map (GP9/GP26).
+Full map: [`PINOUT.md`](PINOUT.md). PCM5102 listen: [`I2S_NOISE.md`](I2S_NOISE.md).
 
-| Function | GPIO | Notes |
-|----------|------|-------|
-| Dist Drive PWM | **GP2** | wrap 4095 |
-| Dist Mix PWM | **GP3** | wrap 4095 |
-| Filter mode A | **GP4** | bit 0 → stage-1 SPDT (+ inverter off-board) |
-| Filter mode B | **GP5** | bit 1 → stage-2 SPDT |
-| Input RX | **GP1** | UART0 / `Serial1` RX ← Input TX |
-| Input TX | GP0 | **Do not wire** to Input bus |
+| Function | GPIO |
+|----------|------|
+| Input RX | GP1 |
+| Dist Drive / Mix | GP2 / GP3 |
+| Filter mode A / B | GP4 / GP5 |
+| I2S BCK / RCK / DIN / XMT | GP6 / GP7 / GP8 / GP10 |
 
 ## Build
 
-Arduino-Pico / RP2040 board. Open `VOICE-AUX/` (folder symlink `VOICE-AUX` → `.` for the IDE). On the DCO sketch, enable `#define ENABLE_VOICE_AUX` so Dist PWM writers stay compiled but do not claim GP9/GP26.
+Arduino-Pico / RP2040 board. Open `VOICE-AUX/` (folder symlink `VOICE-AUX` → `.` for the IDE). Pass `--libraries ./_build_libs` so the `DCO_Noise` symlink resolves. On the DCO sketch, enable `#define ENABLE_VOICE_AUX` so Dist PWM writers stay compiled but do not claim GP9/GP26.
 
 ## Boot note
 

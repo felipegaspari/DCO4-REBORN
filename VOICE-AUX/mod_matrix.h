@@ -36,7 +36,8 @@ enum ModDest : uint8_t {
   MOD_DEST_DIST_DRIVE = 6,
   MOD_DEST_VCF_CUTOFF = 7,
   MOD_DEST_DIST_MIX = 8,
-  MOD_DEST_COUNT = 9
+  MOD_DEST_PITCH = 9,  // DCO-only; ignored by aux apply
+  MOD_DEST_COUNT = 10
 };
 
 struct ModSlot {
