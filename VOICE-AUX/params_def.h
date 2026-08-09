@@ -178,6 +178,9 @@ enum ParamId : uint16_t {
   PARAM_LFO2_TO_OSC2_COARSE      = 219,
   PARAM_LFO2_TO_OSC3_COARSE      = 220,
 
+  // EnvDCO → pitch tap: 0 unipolar (default), 1 centered (env−16384; mid S ≈ note).
+  PARAM_ADSR3_PITCH_MODE         = 223,
+
   // --- Calibration flags (shared) ------------------------------------
   PARAM_CALIBRATION_FLAG         = 150,
   PARAM_MANUAL_CALIBRATION_FLAG  = 151,
