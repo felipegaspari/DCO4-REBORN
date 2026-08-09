@@ -1,16 +1,32 @@
 [submodule "SCREEN-CONTROLLER"]
 	path = SCREEN-CONTROLLER
-	url = https://github.com/felipegaspari/DCO3-MONOSYNTH-SCREEN-CONTROLLER.git
-	branch = improvements-color-screen
+	url = https://github.com/felipegaspari/DCO4-REBORN-SCREEN-CONTROLLER.git
+	branch = main
 [submodule "INPUT-CONTROLLER"]
 	path = INPUT-CONTROLLER
-	url = https://github.com/felipegaspari/DCO3-MONOSYNTH-INPUT-CONTROLLER.git
-	branch = improvements
+	url = https://github.com/felipegaspari/DCO4-REBORN-INPUT-CONTROLLER.git
+	branch = main
 [submodule "DCO"]
 	path = DCO
-	url = https://github.com/felipegaspari/DCO3-MONOSYNTH-DCO.git
-	branch = improvements
+	url = https://github.com/felipegaspari/DCO4-REBORN-DCO.git
+	branch = main
 [submodule "Mainboard"]
 	path = _archived/Mainboard
-	url = https://github.com/felipegaspari/DCO4_Mainboard_Controller.git
-	branch = improvements
+	url = https://github.com/felipegaspari/DCO4-REBORN-MAINBOARD.git
+	branch = main
+[submodule "VOICE-AUX"]
+	path = VOICE-AUX
+	url = https://github.com/felipegaspari/DCO4-REBORN-VOICE-AUX.git
+	branch = main
+[submodule "DCO_Noise"]
+	path = DCO_Noise
+	url = https://github.com/felipegaspari/DCO_Noise.git
+	branch = main
+[submodule "mo-lfo"]
+	path = mo-lfo
+	url = https://github.com/felipegaspari/mo-lfo.git
+	branch = q15
+[submodule "ADSR_Bezier"]
+	path = ADSR_Bezier
+	url = https://github.com/felipegaspari/ADSR_Bezier.git
+	branch = Q15

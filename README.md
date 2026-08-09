@@ -1,4 +1,4 @@
-# DCO3-MONOSYNTH
+# DCO4-REBORN
 
 A **3-oscillator monosynth** firmware project, forked from DCO4. The DCO voice board runs on a **Raspberry Pi Pico 2 (RP2350)** and is also the **serial hub** (Input + Screen). The STM32 Mainboard is **archived**.
 
@@ -12,19 +12,19 @@ A **3-oscillator monosynth** firmware project, forked from DCO4. The DCO voice b
 
 ## Boards (shipping = 3)
 
-| Board | Folder | Role |
-|-------|--------|------|
-| DCO | `DCO/` | MIDI, voice engine, envs/LFOs, hub UARTs, cal, opt-in CV outs (RP2350) |
-| Voice aux | `VOICE-AUX/` | RP2040: Dist Drive/Mix + filter mode (RX-only on Input TX); see `DCO/docs/DUAL_MCU.md` |
-| Input | `INPUT-CONTROLLER/` | Panel scan, presets → voice (DCO ± aux) |
-| Screen | `SCREEN-CONTROLLER/` | LVGL display; gap relayed by Input |
-| ~~Mainboard~~ | [`_archived/Mainboard/`](_archived/Mainboard/) | Archived STM32 peer |
+| Board | Folder | GitHub repo |
+|-------|--------|-------------|
+| DCO | `DCO/` | [`DCO4-REBORN-DCO`](https://github.com/felipegaspari/DCO4-REBORN-DCO) |
+| Voice aux | `VOICE-AUX/` | [`DCO4-REBORN-VOICE-AUX`](https://github.com/felipegaspari/DCO4-REBORN-VOICE-AUX) |
+| Input | `INPUT-CONTROLLER/` | [`DCO4-REBORN-INPUT-CONTROLLER`](https://github.com/felipegaspari/DCO4-REBORN-INPUT-CONTROLLER) |
+| Screen | `SCREEN-CONTROLLER/` | [`DCO4-REBORN-SCREEN-CONTROLLER`](https://github.com/felipegaspari/DCO4-REBORN-SCREEN-CONTROLLER) |
+| ~~Mainboard~~ | [`_archived/Mainboard/`](_archived/Mainboard/) | [`DCO4-REBORN-MAINBOARD`](https://github.com/felipegaspari/DCO4-REBORN-MAINBOARD) |
 
-Submodules: see `.gitmodules`. Overview: [`DCO/docs/SYSTEM_OVERVIEW.md`](DCO/docs/SYSTEM_OVERVIEW.md).
+Shared libraries (submodules): [`mo-lfo`](https://github.com/felipegaspari/mo-lfo) (`q15`), [`ADSR_Bezier`](https://github.com/felipegaspari/ADSR_Bezier) (`Q15`), [`DCO_Noise`](https://github.com/felipegaspari/DCO_Noise). Full pin list: `.gitmodules`. Overview: [`DCO/docs/SYSTEM_OVERVIEW.md`](DCO/docs/SYSTEM_OVERVIEW.md).
 
 ## Architecture vs DCO4
 
-| | DCO4 | DCO3-MONOSYNTH (now) |
+| | DCO4 | DCO4-REBORN (now) |
 |--|------|----------------------|
 | MCU (DCO) | RP2040 (2 PIO) | **RP2350 Pico 2 (3 PIO)** |
 | Voices | 4 | **1** |
