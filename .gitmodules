@@ -30,3 +30,7 @@
 	path = ADSR_Bezier
 	url = https://github.com/felipegaspari/ADSR_Bezier.git
 	branch = Q15
+[submodule "MAINBOARD-CONTROLLER"]
+	path = MAINBOARD-CONTROLLER
+	url = https://github.com/felipegaspari/DCO4-REBORN-MAINBOARD-CONTROLLER.git
+	branch = main

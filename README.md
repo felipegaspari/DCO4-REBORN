@@ -18,6 +18,7 @@ A **3-oscillator monosynth** firmware project, forked from DCO4. The DCO voice b
 | Voice aux | `VOICE-AUX/` | [`DCO4-REBORN-VOICE-AUX`](https://github.com/felipegaspari/DCO4-REBORN-VOICE-AUX) |
 | Input | `INPUT-CONTROLLER/` | [`DCO4-REBORN-INPUT-CONTROLLER`](https://github.com/felipegaspari/DCO4-REBORN-INPUT-CONTROLLER) |
 | Screen | `SCREEN-CONTROLLER/` | [`DCO4-REBORN-SCREEN-CONTROLLER`](https://github.com/felipegaspari/DCO4-REBORN-SCREEN-CONTROLLER) |
+| Mainboard Controller | `MAINBOARD-CONTROLLER/` | [`DCO4-REBORN-MAINBOARD-CONTROLLER`](https://github.com/felipegaspari/DCO4-REBORN-MAINBOARD-CONTROLLER) |
 | ~~Mainboard~~ | [`_archived/Mainboard/`](_archived/Mainboard/) | [`DCO4-REBORN-MAINBOARD`](https://github.com/felipegaspari/DCO4-REBORN-MAINBOARD) |
 
 Shared libraries (submodules): [`mo-lfo`](https://github.com/felipegaspari/mo-lfo) (`q15`), [`ADSR_Bezier`](https://github.com/felipegaspari/ADSR_Bezier) (`Q15`), [`DCO_Noise`](https://github.com/felipegaspari/DCO_Noise). Full pin list: `.gitmodules`. Overview: [`DCO/docs/SYSTEM_OVERVIEW.md`](DCO/docs/SYSTEM_OVERVIEW.md).
