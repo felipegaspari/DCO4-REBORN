@@ -34,3 +34,12 @@
 	path = MAINBOARD-CONTROLLER
 	url = https://github.com/felipegaspari/DCO4-REBORN-MAINBOARD-CONTROLLER.git
 	branch = main
+[submodule "RoxMux_FELA"]
+	path = RoxMux_FELA
+	url = https://github.com/felipegaspari/RoxMux_FELA.git
+[submodule "CD74HC4067_FELA"]
+	path = CD74HC4067_FELA
+	url = https://github.com/felipegaspari/CD74HC4067_FELA.git
+[submodule "MD_REncoder_FELA"]
+	path = MD_REncoder_FELA
+	url = https://github.com/felipegaspari/MD_REncoder_FELA.git
