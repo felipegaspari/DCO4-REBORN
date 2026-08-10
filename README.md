@@ -1,48 +1,44 @@
 # DCO4-REBORN
 
-A **3-oscillator monosynth** firmware project, forked from DCO4. The DCO voice board runs on a **Raspberry Pi Pico 2 (RP2350)** and is also the **serial hub** (Input + Screen). The STM32 Mainboard is **archived**.
+Firmware for the **classic DCO4 analog polysynth**: **4 MIDI voices × 2 oscillators**, STM32 Mainboard as analog/modulation hub, DCO3 Q15/Q24 math and slim little-endian UART. MIDI stays on the DCO.
 
 ## Purpose
 
-- **1 voice × 3 oscillators**
-- Frequency on **PIO** (one freq SM per oscillator)
-- Amplitude compensation via **RANGE PWM**
-- Envelopes (EnvDCO / EnvVCA / EnvVCF), LFOs, and filter/VCA CV math on the DCO
-- Scaffolding for a later **3-voice paraphonic** mode
+- **4 voices × 2 analog DCOs** (RANGE + PW PWM on the voice board)
+- Frequency on **PIO** (RP2040 / RP2350)
+- Envelopes, LFOs, mod matrix, VCA/VCF/reso CVs, MCP4728 SQR/Sub, 74HC595 waves on the **STM32 Mainboard**
+- DCO3-quality MIDI allocator (last-note stack, full CC map, AT, PB) on the **DCO**
 
-## Boards (shipping = 3)
+## Boards
 
-| Board | Folder | GitHub repo |
-|-------|--------|-------------|
-| DCO | `DCO/` | [`DCO4-REBORN-DCO`](https://github.com/felipegaspari/DCO4-REBORN-DCO) |
-| Voice aux | `VOICE-AUX/` | [`DCO4-REBORN-VOICE-AUX`](https://github.com/felipegaspari/DCO4-REBORN-VOICE-AUX) |
-| Input | `INPUT-CONTROLLER/` | [`DCO4-REBORN-INPUT-CONTROLLER`](https://github.com/felipegaspari/DCO4-REBORN-INPUT-CONTROLLER) |
-| Screen | `SCREEN-CONTROLLER/` | [`DCO4-REBORN-SCREEN-CONTROLLER`](https://github.com/felipegaspari/DCO4-REBORN-SCREEN-CONTROLLER) |
-| Mainboard Controller | `MAINBOARD-CONTROLLER/` | [`DCO4-REBORN-MAINBOARD-CONTROLLER`](https://github.com/felipegaspari/DCO4-REBORN-MAINBOARD-CONTROLLER) |
-| ~~Mainboard~~ | [`_archived/Mainboard/`](_archived/Mainboard/) | [`DCO4-REBORN-MAINBOARD`](https://github.com/felipegaspari/DCO4-REBORN-MAINBOARD) |
+| Board | Folder | MCU | Owns |
+|-------|--------|-----|------|
+| DCO | `DCO/` | RP2040 / RP2350 | MIDI, voice alloc, PIO pitch, RANGE/PW, amp-comp, autotune, Character, pitch drift |
+| Mainboard | `MAINBOARD-CONTROLLER/` | STM32 | EnvVCA/VCF/DCO ×4, LFO1/2, matrix, analog CVs, Input/DCO UART hub |
+| Input | `INPUT-CONTROLLER/` | RP2040 | Panel scan, presets, Screen UI frames |
+| Screen | `SCREEN-CONTROLLER/` | RP2040 | LVGL UI |
+| Voice aux | `VOICE-AUX/` | RP2040 | Optional Dist / filter-mode helper |
 
-Shared libraries (submodules): [`mo-lfo`](https://github.com/felipegaspari/mo-lfo) (`q15`), [`ADSR_Bezier`](https://github.com/felipegaspari/ADSR_Bezier) (`Q15`), [`DCO_Noise`](https://github.com/felipegaspari/DCO_Noise). Full pin list: `.gitmodules`. Overview: [`DCO/docs/SYSTEM_OVERVIEW.md`](DCO/docs/SYSTEM_OVERVIEW.md).
+Shared libraries: [`mo-lfo`](https://github.com/felipegaspari/mo-lfo) (Q15), [`ADSR_Bezier`](https://github.com/felipegaspari/ADSR_Bezier) (Q15), [`DCO_Noise`](https://github.com/felipegaspari/DCO_Noise). Topology: [`MAINBOARD-CONTROLLER/docs/MAINBOARD_REINTEGRATION.md`](MAINBOARD-CONTROLLER/docs/MAINBOARD_REINTEGRATION.md), [`DCO/docs/SYSTEM_OVERVIEW.md`](DCO/docs/SYSTEM_OVERVIEW.md).
 
-## Architecture vs DCO4
+## Architecture
 
-| | DCO4 | DCO4-REBORN (now) |
-|--|------|----------------------|
-| MCU (DCO) | RP2040 (2 PIO) | **RP2350 Pico 2 (3 PIO)** |
-| Voices | 4 | **1** |
-| Oscillators | 8 | **3** |
-| Modulation / CV hub | STM32 Mainboard | **DCO** (Mainboard archived) |
-| Amplitude | RANGE PWM | **RANGE PWM** |
+| | Classic DCO4 wiring | Control model |
+|--|---------------------|---------------|
+| MCU (DCO) | RP2040 (2 PIO) or RP2350 | PIO pitch + MIDI |
+| Voices | 4 × 2 osc | same |
+| Modulation / analog CV hub | STM32 Mainboard | DCO3 Q15/Q24 bake-on-write |
+| Amplitude | RANGE PWM | same |
 
 ```mermaid
 flowchart LR
-  MIDI["MIDI USB+DIN"] --> DCO["DCO Pico 2 hub"]
-  Input["Input"] -->|"UART panel\nInput Serial1 TX GP0 to DCO Serial2 RX GP21"| DCO
-  DCO -->|"gap 154 + cal 155\nDCO Serial2 TX GP20 to Input Serial1 RX GP1"| Input
-  Input -->|"UART UI + relayed gap\nInput Serial2 TX GP4 to Screen Serial1 RX GP13"| Screen["Screen"]
-  DCO --> PIO0["PIO0 SM0 OSC1"]
-  DCO --> PIO1["PIO1 SM0 OSC2"]
-  DCO --> PIO2["PIO2 SM0 OSC3"]
-  DCO --> PWM["RANGE PWM ×3"]
+  MIDI["MIDI USB+DIN"] --> DCO["DCO RP2040/2350\n4x2 PIO + RANGE + PW"]
+  DCO -->|"Serial2 GP20/21 2.5M\n'n'/'o'/'e'/'x'/'p'"| MB["STM32 Mainboard"]
+  MB -->|"'m' Q15/Q24 + 'p'"| DCO
+  Input["Input RP2040"] -->|"Serial2 GP4/5\n'a'..'d'/'p'/'q'"| MB
+  Input -->|"Serial1 GP0/1"| Screen["Screen"]
+  MB -->|"Serial8 PE0/PE1\n'x' 154/155"| Input
+  MB --> Analog["4x VCA + 4x VCF + reso\nMCP4728 SQR/Sub\n74HC595 waves"]
 ```
 
 ## Build (DCO)
@@ -55,13 +51,6 @@ arduino-cli compile \
   .
 ```
 
-The DCO has one peer link: its Serial2 (GP20 TX / GP21 RX) against the Input's Serial1 (GP0 TX / GP1 RX). The Input drives the Screen from its other UART, Serial2 TX (GP4), and relays the calibration gap there, so there are no serial topology flags to set.
+Mainboard: STM32 Arduino sketch `MAINBOARD-CONTROLLER/MAINBOARD-CONTROLLER.ino`. Input: RP2040 `INPUT-CONTROLLER/INPUT-CONTROLLER.ino`.
 
-## Driving the DCO without the panel
-
-Two ways, both reaching the whole control surface with no Input board or Screen attached:
-
-- [`DCO/tools/dco_control/`](DCO/tools/dco_control/README.md) — a Linux GUI over USB serial
-- [`DCO/docs/MIDI_CC_MAP.md`](DCO/docs/MIDI_CC_MAP.md) — every control on a 7-bit MIDI CC, for a DAW or a panel app, with a generated Open Stage Control session in `DCO/tools/panels/`
-
-Living checklist: [`TODO_3OSC_MIGRATION.md`](TODO_3OSC_MIGRATION.md).
+USB bench without the panel: [`DCO/tools/dco_control/`](DCO/tools/dco_control/README.md). MIDI CC map: [`DCO/docs/MIDI_CC_MAP.md`](DCO/docs/MIDI_CC_MAP.md).
