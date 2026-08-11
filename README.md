@@ -18,6 +18,7 @@ Firmware for the **classic DCO4 analog polysynth**: **4 MIDI voices × 2 oscilla
 | Input | `INPUT-CONTROLLER/` | RP2040 | Panel scan, presets, Screen UI frames |
 | Screen | `SCREEN-CONTROLLER/` | RP2040 | LVGL UI |
 | Voice aux | `VOICE-AUX/` | RP2040 | Optional Dist / filter-mode helper |
+| Control panel | `DCO-CONTROL-PANEL/` | host (Linux) | USB bench GUI; shared submodule with DCO3-MONOSYNTH |
 
 Shared libraries: [`mo-lfo`](https://github.com/felipegaspari/mo-lfo) (Q15), [`ADSR_Bezier`](https://github.com/felipegaspari/ADSR_Bezier) (Q15), [`DCO_Noise`](https://github.com/felipegaspari/DCO_Noise). Topology: [`MAINBOARD-CONTROLLER/docs/MAINBOARD_REINTEGRATION.md`](MAINBOARD-CONTROLLER/docs/MAINBOARD_REINTEGRATION.md), [`DCO/docs/SYSTEM_OVERVIEW.md`](DCO/docs/SYSTEM_OVERVIEW.md).
 
@@ -79,4 +80,4 @@ Never edit `INPUT_BOARD_MODEL` in the checked-out `board_model.h` — that file
 is identical to DCO3-MONOSYNTH's copy and any local edit will be silently
 discarded the next time the submodule is updated.
 
-USB bench without the panel: [`DCO/tools/dco_control/`](DCO/tools/dco_control/README.md). MIDI CC map: [`DCO/docs/MIDI_CC_MAP.md`](DCO/docs/MIDI_CC_MAP.md).
+USB bench without the panel: [`DCO-CONTROL-PANEL/`](DCO-CONTROL-PANEL/README.md). MIDI CC map: [`DCO/docs/MIDI_CC_MAP.md`](DCO/docs/MIDI_CC_MAP.md).
