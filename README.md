@@ -46,11 +46,37 @@ flowchart LR
 ```bash
 cd DCO
 arduino-cli compile \
-  --fqbn rp2040:rp2040:rpipico2:usbstack=tinyusb \
+  --fqbn rp2040:rp2040:rpipico2:usbstack=tinyusb,flash=4194304_524288 \
   --libraries ./_build_libs \
   .
 ```
 
-Mainboard: STM32 Arduino sketch `MAINBOARD-CONTROLLER/MAINBOARD-CONTROLLER.ino`. Input: RP2040 `INPUT-CONTROLLER/INPUT-CONTROLLER.ino`.
+`flash=…_524288` gives the DCO a 512 KB LittleFS partition for the 256-slot MCU preset
+store and calibration files (see `DCO/docs/PRESET_STORE.md`). Changing the FS size
+reformats it — back up calibration/presets with `DCO/tools/dco_control` first.
+
+Mainboard: STM32 Arduino sketch `MAINBOARD-CONTROLLER/MAINBOARD-CONTROLLER.ino`.
+
+## Build (Input)
+
+`INPUT-CONTROLLER/` is a **shared submodule**: the exact same commit runs the
+panel on both DCO3-MONOSYNTH and this project (see
+[`INPUT-CONTROLLER/README.md`](INPUT-CONTROLLER/README.md)). Its
+`board_model.h` default is DCO3, so **this project's builds must always pass
+the DCO4 override**, or the firmware will boot with the wrong voice count and
+UART wiring:
+
+```bash
+./scripts/build_input.sh          # wraps the arduino-cli call below
+# or, equivalently:
+arduino-cli compile --fqbn rp2040:rp2040:rpipico \
+  --libraries ./INPUT-CONTROLLER/_build_libs \
+  --build-property "compiler.cpp.extra_flags=-DINPUT_BOARD_MODEL=INPUT_BOARD_DCO4 -DROXMUX_FELA_SRAM_HOT=0" \
+  ./INPUT-CONTROLLER
+```
+
+Never edit `INPUT_BOARD_MODEL` in the checked-out `board_model.h` — that file
+is identical to DCO3-MONOSYNTH's copy and any local edit will be silently
+discarded the next time the submodule is updated.
 
 USB bench without the panel: [`DCO/tools/dco_control/`](DCO/tools/dco_control/README.md). MIDI CC map: [`DCO/docs/MIDI_CC_MAP.md`](DCO/docs/MIDI_CC_MAP.md).

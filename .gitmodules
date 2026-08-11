@@ -4,7 +4,7 @@
 	branch = main
 [submodule "INPUT-CONTROLLER"]
 	path = INPUT-CONTROLLER
-	url = https://github.com/felipegaspari/DCO4-REBORN-INPUT-CONTROLLER.git
+	url = https://github.com/felipegaspari/DCO3-MONOSYNTH-INPUT-CONTROLLER.git
 	branch = main
 [submodule "DCO"]
 	path = DCO
