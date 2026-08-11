@@ -20,6 +20,14 @@ Firmware for the **classic DCO4 analog polysynth**: **4 MIDI voices × 2 oscilla
 | Voice aux | `VOICE-AUX/` | RP2040 | Optional Dist / filter-mode helper |
 | Control panel | `DCO-CONTROL-PANEL/` | host (Linux) | USB bench GUI; shared submodule with DCO3-MONOSYNTH |
 
+`INPUT-CONTROLLER/`, `SCREEN-CONTROLLER/`, `DCO-CONTROL-PANEL/` and
+`DCO-PROTOCOL/` are shared with DCO3-MONOSYNTH — one repo, checked out into both
+synths, byte-identical in each. They learn which instrument they are part of
+from [`project_config.h`](project_config.h) at this root, read through a symlink
+that resolves differently in each project, so no board has a per-project flag,
+build script or hand-edited line. `PROJECT_INSTRUMENT 4` here is the single
+declaration that this is the 4-voice synth.
+
 Shared libraries: [`mo-lfo`](https://github.com/felipegaspari/mo-lfo) (Q15), [`ADSR_Bezier`](https://github.com/felipegaspari/ADSR_Bezier) (Q15), [`DCO_Noise`](https://github.com/felipegaspari/DCO_Noise). Topology: [`MAINBOARD-CONTROLLER/docs/MAINBOARD_REINTEGRATION.md`](MAINBOARD-CONTROLLER/docs/MAINBOARD_REINTEGRATION.md), [`DCO/docs/SYSTEM_OVERVIEW.md`](DCO/docs/SYSTEM_OVERVIEW.md).
 
 ## Architecture
@@ -62,22 +70,24 @@ Mainboard: STM32 Arduino sketch `MAINBOARD-CONTROLLER/MAINBOARD-CONTROLLER.ino`.
 
 `INPUT-CONTROLLER/` is a **shared submodule**: the exact same commit runs the
 panel on both DCO3-MONOSYNTH and this project (see
-[`INPUT-CONTROLLER/README.md`](INPUT-CONTROLLER/README.md)). Its
-`board_model.h` default is DCO3, so **this project's builds must always pass
-the DCO4 override**, or the firmware will boot with the wrong voice count and
-UART wiring:
+[`INPUT-CONTROLLER/README.md`](INPUT-CONTROLLER/README.md)). It knows which
+synth it is building for from [`project_config.h`](project_config.h) at this
+root, which it reads through a symlink, so no override is needed and there is
+nothing to remember:
 
 ```bash
 ./scripts/build_input.sh          # wraps the arduino-cli call below
 # or, equivalently:
 arduino-cli compile --fqbn rp2040:rp2040:rpipico \
   --libraries ./INPUT-CONTROLLER/_build_libs \
-  --build-property "compiler.cpp.extra_flags=-DINPUT_BOARD_MODEL=INPUT_BOARD_DCO4 -DROXMUX_FELA_SRAM_HOT=0" \
+  --build-property "compiler.cpp.extra_flags=-DROXMUX_FELA_SRAM_HOT=0" \
   ./INPUT-CONTROLLER
 ```
 
-Never edit `INPUT_BOARD_MODEL` in the checked-out `board_model.h` — that file
-is identical to DCO3-MONOSYNTH's copy and any local edit will be silently
-discarded the next time the submodule is updated.
+`PROJECT_INSTRUMENT 4` in that file is the one place this project declares what
+it is; the Screen sketch and the control panel read it too. Never edit
+`board_model.h` inside the submodule — it is identical to DCO3-MONOSYNTH's copy
+and any local edit will be silently discarded the next time the submodule is
+updated.
 
 USB bench without the panel: [`DCO-CONTROL-PANEL/`](DCO-CONTROL-PANEL/README.md). MIDI CC map: [`DCO/docs/MIDI_CC_MAP.md`](DCO/docs/MIDI_CC_MAP.md).

@@ -1,7 +1,7 @@
 [submodule "SCREEN-CONTROLLER"]
 	path = SCREEN-CONTROLLER
-	url = https://github.com/felipegaspari/DCO4-REBORN-SCREEN-CONTROLLER.git
-	branch = main
+	url = https://github.com/felipegaspari/DCO3-MONOSYNTH-SCREEN-CONTROLLER.git
+	branch = Q15
 [submodule "INPUT-CONTROLLER"]
 	path = INPUT-CONTROLLER
 	url = https://github.com/felipegaspari/DCO3-MONOSYNTH-INPUT-CONTROLLER.git
@@ -46,4 +46,8 @@
 [submodule "DCO-CONTROL-PANEL"]
 	path = DCO-CONTROL-PANEL
 	url = https://github.com/felipegaspari/DCO-CONTROL-PANEL.git
+	branch = main
+[submodule "DCO-PROTOCOL"]
+	path = DCO-PROTOCOL
+	url = https://github.com/felipegaspari/DCO-PROTOCOL.git
 	branch = main
