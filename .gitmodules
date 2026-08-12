@@ -51,3 +51,7 @@
 	path = DCO-PROTOCOL
 	url = https://github.com/felipegaspari/DCO-PROTOCOL.git
 	branch = main
+[submodule "DCO-SHARED-LIBRARIES"]
+	path = DCO-SHARED-LIBRARIES
+	url = https://github.com/felipegaspari/DCO-SHARED-LIBRARIES.git
+	branch = main
