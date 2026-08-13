@@ -6,7 +6,7 @@ Firmware for the **classic DCO4 analog polysynth**: **4 MIDI voices × 2 oscilla
 
 - **4 voices × 2 analog DCOs** (RANGE + PW PWM on the voice board)
 - Frequency on **PIO** (RP2040 / RP2350)
-- Envelopes, LFOs, mod matrix, VCA/VCF/reso CVs, MCP4728 SQR/Sub, 74HC595 waves on the **STM32 Mainboard**
+- Envelopes, LFOs, mod matrix, VCA/VCF/reso CVs, MCP4728 osc/sub levels, 74HC595 waves on the **STM32 Mainboard**
 - DCO3-quality MIDI allocator (last-note stack, full CC map, AT, PB) on the **DCO**
 
 ## Boards
@@ -47,7 +47,7 @@ flowchart LR
   Input["Input RP2040"] -->|"Serial2 GP4/5\n'a'..'d'/'p'/'q'"| MB
   Input -->|"Serial1 GP0/1"| Screen["Screen"]
   MB -->|"Serial8 PE0/PE1\n'x' 154/155"| Input
-  MB --> Analog["4x VCA + 4x VCF + reso\nMCP4728 SQR/Sub\n74HC595 waves"]
+  MB --> Analog["4x VCA + 4x VCF + reso\nMCP4728 osc/sub levels\n74HC595 waves"]
 ```
 
 ## Build (DCO)
