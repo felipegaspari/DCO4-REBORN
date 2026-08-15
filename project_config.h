@@ -43,7 +43,7 @@
 #define DCO_MCU_PICO2         3
 
 #ifndef DCO_MCU_BOARD
-#define DCO_MCU_BOARD DCO_MCU_PICO
+#define DCO_MCU_BOARD 2
 #endif
 
 // RANGE PWM wrap (DCO DIV_COUNTER). Analog duty = level / wrap. Change this
